@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_28_151153) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_03_091918) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_151153) do
     t.index ["shopper_id"], name: "index_orders_on_shopper_id"
   end
 
+  create_table "post_likes", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_likes_on_post_id"
+    t.index ["user_id"], name: "index_post_likes_on_user_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.text "text"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "shoppers", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -50,6 +67,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_28_151153) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "orders", "merchants"
   add_foreign_key "orders", "shoppers"
+  add_foreign_key "post_likes", "posts"
+  add_foreign_key "post_likes", "users"
+  add_foreign_key "posts", "users"
 end

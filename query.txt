@@ -1,0 +1,3 @@
+user = User.find(1)
+user.posts.joins(:likes).select('text, count(post_likes.id) as number_of_likes').group('posts.id') # for common records
+user.posts.left_outer_joins(:likes).select('text, count(post_likes.id) as number_of_likes').group('posts.id') # for all records

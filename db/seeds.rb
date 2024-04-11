@@ -36,3 +36,7 @@ order_rows.each do |row|
   order = Order.new(merchant_id: row[1], shopper_id: row[2], amount: row[3], created_at: row[4], completed_at: row[5])
   order.save
 end
+
+User.create(name: 'User 1', email: 'user1email')
+36.times { Post.create(text: 'Post 1 text', user_id: User.first) }
+7.times { PostLike.create(post_id: Post.last, user_id: User.first) }
